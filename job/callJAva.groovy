@@ -1,12 +1,13 @@
 //https://www.eficode.com/blog/jenkins-groovy-tutorial
 pipeline {
-    node any
-    
+    node any   
 
     stages {
         stage('Call WS') {
-            script {
-                callRESTapi()
+            steps{
+                script {
+                    callRESTapi()
+                }
             }
         }
     }
