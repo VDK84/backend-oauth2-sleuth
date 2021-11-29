@@ -18,7 +18,7 @@ def callRESTapi() {
     httpRequest(
             acceptType: 'APPLICATION_JSON',
             contentType: 'APPLICATION_JSON',
-            consoleLogResponseBody: DEBUG_HTTP,
+            consoleLogResponseBody: true,
             ignoreSslErrors: true,
             httpMode: 'GET',
             url: url

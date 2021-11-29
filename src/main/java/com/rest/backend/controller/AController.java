@@ -54,18 +54,18 @@ public class AController {
     // String.class);
     return "Message from RestCall: " + msg;
   }
-  
+
 // http://192.168.1.138:8088
 // /a/callJenkins
   final String jenkinsUser = "vdk84";
-  final String jenkinsToken = "119bf1bff861a209e23d95804d895d28a1";
-  // private static final String SUB_URL = "/buildWithParameters?token=";
+  final String jenkinsToken = "119bf1bff861a209e23d95804d895d28a1";  
+  private static final String SUB_URL = "/buildWithParameters?REST_URL='http://192.168.1.138:8088'&REST_SERVICE='/a/callJenkins'";
 
   @GetMapping("/callJenkins")
   public String callJenkins() {
     log.info("Incoming REST consumed: /callJenkins");
     try {
-      return JenkinsScraper.scrape(jenkinsServer + "/job/rest%20test/build", jenkinsUser, jenkinsToken);
+      return JenkinsScraper.scrape(jenkinsServer + "/job/test_rest2" + SUB_URL, jenkinsUser, jenkinsToken);
     } catch (ClientProtocolException e1) {
       e1.printStackTrace();
       return "Error\n"+e1.getMessage();
