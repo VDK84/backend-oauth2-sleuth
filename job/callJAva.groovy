@@ -1,6 +1,6 @@
 //https://www.eficode.com/blog/jenkins-groovy-tutorial
 pipeline {
-    node any   
+    agent any   
 
     stages {
         stage('Call WS') {
