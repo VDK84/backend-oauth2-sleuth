@@ -1,7 +1,11 @@
 package com.rest.backend.controller;
 
+import java.io.IOException;
 import java.util.stream.Collectors;
 
+import com.rest.backend.JenkinsScraper;
+
+import org.apache.http.client.ClientProtocolException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
+
 @RestController
 @RequestMapping("/a")
 public class AController {
@@ -21,9 +26,12 @@ public class AController {
 
   @Autowired
   private RestTemplate restTemplate;
-  
+
   @Value("${server.port}")
   private String serverPort;
+
+  @Value("${jenkins-server}")
+  private String jenkinsServer;
 
   @GetMapping("/message")
   public String message(@RequestHeader MultiValueMap<String, String> headers) {
@@ -31,8 +39,39 @@ public class AController {
     headers.forEach((key, value) -> {
       log.info(String.format("Header '%s' = %s", key, value.stream().collect(Collectors.joining("|"))));
     });
-    msg = restTemplate.getForObject("http://localhost:"+serverPort+"/c/message", String.class);
+    msg = restTemplate.getForObject("http://localhost:" + serverPort + "/c/message", String.class);
     return "Message from RestCall: " + msg;
   }
 
+  @GetMapping("/jenkins")
+  public String jenkins(@RequestHeader MultiValueMap<String, String> headers) {
+    log.info("Incoming REST consumed: /jenkins");
+    String msg = "";
+    headers.forEach((key, value) -> {
+      log.info(String.format("Header '%s' = %s", key, value.stream().collect(Collectors.joining("|"))));
+    });
+    // msg = restTemplate.getForObject("http://localhost:"+serverPort+"/c/message",
+    // String.class);
+    return "Message from RestCall: " + msg;
+  }
+  
+// http://192.168.1.138:8088
+// /a/callJenkins
+  final String jenkinsUser = "vdk84";
+  final String jenkinsToken = "119bf1bff861a209e23d95804d895d28a1";
+  // private static final String SUB_URL = "/buildWithParameters?token=";
+
+  @GetMapping("/callJenkins")
+  public String callJenkins() {
+    log.info("Incoming REST consumed: /callJenkins");
+    try {
+      return JenkinsScraper.scrape(jenkinsServer + "/job/rest%20test/build", jenkinsUser, jenkinsToken);
+    } catch (ClientProtocolException e1) {
+      e1.printStackTrace();
+      return "Error\n"+e1.getMessage();
+
+    } catch (IOException e1) {
+      return "Error\n"+e1.getMessage();
+    }
+  }
 }

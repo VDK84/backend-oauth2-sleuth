@@ -1,5 +1,4 @@
-#
-#https://www.eficode.com/blog/jenkins-groovy-tutorial
+//https://www.eficode.com/blog/jenkins-groovy-tutorial
 pipeline {
     node any
     
