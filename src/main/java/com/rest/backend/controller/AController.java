@@ -59,7 +59,7 @@ public class AController {
 // /a/callJenkins
   final String jenkinsUser = "vdk84";
   final String jenkinsToken = "119bf1bff861a209e23d95804d895d28a1";  
-  private static final String SUB_URL = "/buildWithParameters?REST_URL='http://192.168.1.138:8088'&REST_SERVICE='/a/callJenkins'";
+  private static final String SUB_URL = "/buildWithParameters?REST_URL=http://192.168.1.138:8088&REST_SERVICE=/a/callJenkins&REST_EXTRA=test";
 
   @GetMapping("/callJenkins")
   public String callJenkins() {
