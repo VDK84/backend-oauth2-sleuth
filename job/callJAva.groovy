@@ -14,7 +14,7 @@ pipeline {
 }
 
 def callRESTapi() {
-    def url = ${params.REST_URL}${params.REST_SERVICE}
+    def url = "${params.REST_URL}${params.REST_SERVICE}"
     httpRequest(
             acceptType: 'APPLICATION_JSON',
             contentType: 'APPLICATION_JSON',
