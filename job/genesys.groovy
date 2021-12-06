@@ -1,5 +1,5 @@
 //https://www.digitalocean.com/community/tutorials/how-to-automate-jenkins-job-configuration-using-job-dsl
-pipelineJob('test_rest3') {
+pipelineJob('test_rest') {
     parameters {
             stringParam('REST_URL', '', 'REST API Base URL')
             stringParam('REST_SERVICE', '', "REST service path")
@@ -9,7 +9,7 @@ pipelineJob('test_rest3') {
             scm {
                 git {
                     remote {
-                        github('https://github.com/VDK84/backend-oauth2-sleuth.git')
+                        url('https://github.com/VDK84/backend-oauth2-sleuth.git')
                     }
                 }
             }
